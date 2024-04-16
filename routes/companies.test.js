@@ -10,7 +10,9 @@ const {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
+  testJobIds,
   u1Token,
+  adminToken,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -95,7 +97,6 @@ describe("GET /companies", function () {
     });
   });
 
-
   test("works: filtering", async function () {
     const resp = await request(app)
       .get("/companies")
@@ -113,8 +114,7 @@ describe("GET /companies", function () {
     });
   });
 
-
-  test ("works: filtering on all filters", async function () {
+  test("works: filtering on all filters", async function () {
     const resp = await request(app)
       .get("/companies")
       .query({ minEmployees: 1, maxEmployees: 2, nameLike: "C" });
@@ -137,8 +137,6 @@ describe("GET /companies", function () {
       ],
     });
   });
-
-
 
   test("fails: test next() handler", async function () {
     // there's no normal failure event which will cause this route to fail ---
@@ -250,13 +248,15 @@ describe("PATCH /companies/:handle", function () {
 
 describe("DELETE /companies/:handle", function () {
   test("works for admins", async function () {
-    const resp = await request(app).delete(`/companies/c1`)
+    const resp = await request(app)
+      .delete(`/companies/c1`)
       .set("authorization", `Bearer ${adminToken}`);
     expect(resp.body).toEqual({ deleted: "c1" });
   });
 
   test("unauth for non-admin", async function () {
-    const resp = await request(app).delete(`/companies/c1`)
+    const resp = await request(app)
+      .delete(`/companies/c1`)
       .set("authorization", `Bearer ${u1Token}`);
     expect(resp.statusCode).toEqual(401);
   });

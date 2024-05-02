@@ -8,7 +8,7 @@ const express = require("express");
 const { BadRequestError } = require("../expressError");
 const { ensureAdmin } = require("../middleware/auth");
 const { ensureLoggedIn } = require("../middleware/auth");
-const Job = require("../models/job ");
+const Job = require("../models/job");
 
 const jobNewSchema = require("../schemas/jobNew.json");
 const jobUpdateSchema = require("../schemas/jobUpdate.json");

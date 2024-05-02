@@ -40,7 +40,7 @@ class job {
    * */
 
   static async findAll({ title, minSalary, hasEquity } = {}) {
-    const query = `SELECT j.id, j.title, j.salary, j.equity, j.company_handle AS "companyHandle",
+    let query = `SELECT j.id, j.title, j.salary, j.equity, j.company_handle AS "companyHandle",
                           c.name AS "companyName"
                    FROM jobs j
                    LEFT JOIN companies AS c ON j.company_handle = c.handle`;
@@ -156,4 +156,4 @@ class job {
   }
 }
 
-module.exports = Job;
+module.exports = job;
